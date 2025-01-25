@@ -29,7 +29,7 @@ function.
 Nếu `parameter` của Composable function thay đổi, Composable sẽ được rebuild.
 
 Khi truyền `function` vào `parameter`, chúng ta thực hiện gọi nó ngay trong argument của Composable
-hoặc gọi sau "{ }".
+hoặc gọi sau "{ }" (miễn argument cuối cùng của Composable function là một function).
 
 ```kotlin
 @Composable
@@ -55,14 +55,6 @@ fun App() {
     Greeting(
         name = "Android",
         funParam = { /* Do something */ }) { name -> /* Do something */ Thực thi funParam2
-    }
-}
-
-// Hoặc
-@Composable
-fun App() {
-    Greeting(name = "Android", funParam2 = { name -> /* Do something */ }) {
-        /* Do something */ Thực thi funParam1
     }
 }
 ```
