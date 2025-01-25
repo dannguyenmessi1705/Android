@@ -20,3 +20,49 @@ Các Annotation trong Android
 - `@PreviewGroup(showBackground = false)`: Không hiển thị background cho nhóm preview.
 - `@PreviewGroup(device = Devices.PIXEL_4)`: Hiển thị nhóm preview trên thiết bị Pixel 4.
 - `@PreviewGroup(widthDp = 360, heightDp = 640)`: Đặt kích thước cho nhóm preview.
+
+# 2. Sử dụng parameter trong Composable
+
+Với các function Composable, chúng ta có thể sử dụng parameter để truyền dữ liệu vào Composable
+function.
+
+Nếu `parameter` của Composable function thay đổi, Composable sẽ được rebuild.
+
+Khi truyền `function` vào `parameter`, chúng ta thực hiện gọi nó ngay trong argument của Composable
+hoặc gọi sau "{ }".
+
+```kotlin
+@Composable
+fun Greeting(
+    name: String,
+    funParam1: () -> Unit,
+    funParam2: (String) -> Unit
+) { // Unit là kiểu dữ liệu của function không trả về giá trị
+    Button(text = "Hello, $name!", onClick = funParam, onClick = { funParam2("Android") })
+}
+
+@Composable
+fun App() {
+    Greeting(
+        name = "Android",
+        funParam = { /* Do something */ },
+        funParam2 = { name -> /* Do something */ })
+}
+
+// Hoặc
+@Composable
+fun App() {
+    Greeting(
+        name = "Android",
+        funParam = { /* Do something */ }) { name -> /* Do something */ Thực thi funParam2
+    }
+}
+
+// Hoặc
+@Composable
+fun App() {
+    Greeting(name = "Android", funParam2 = { name -> /* Do something */ }) {
+        /* Do something */ Thực thi funParam1
+    }
+}
+```

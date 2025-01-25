@@ -31,3 +31,8 @@ Java/Kotlin objects và ngược lại. Gson là một thư viện giúp chúng 
 
 `io.coil-kt:coil-compose` là một dependencies giúp chúng ta load ảnh từ Internet một cách dễ dàng.
 Coil là một thư viện giúp chúng ta load ảnh hiệu quả và dễ dàng.
+
+## 2.5. androidx.navigation:navigation-compose
+
+`androidx.navigation:navigation-compose` là một dependencies giúp chúng ta sử dụng Navigation trong
+Compose.
