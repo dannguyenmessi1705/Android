@@ -52,7 +52,7 @@ android {
 dependencies {
 
     // ViewModel (Giống sử dụng useContext trong React)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-android:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
     // Network (Giống sử dụng axios trong React)
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
