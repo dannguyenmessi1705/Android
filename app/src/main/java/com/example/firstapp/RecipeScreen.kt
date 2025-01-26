@@ -1,6 +1,7 @@
 package com.example.firstapp
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -12,20 +13,20 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun RecipeScreen(modifier: Modifier = Modifier) {
-    val recipeViewModel: MainViewModel = viewModel(); // Lấy dữ liệu từ MainViewModel
-    val viewState by recipeViewModel.categoryState // Lấy dữ liệu từ MainViewModel
+fun RecipeScreen(
+    modifier: Modifier = Modifier,
+    viewState: MainViewModel.RecipeState,
+    navigateToDetail: (Category) -> Unit
+) {
     Box(
         modifier = Modifier.fillMaxSize()  // Chỉnh sửa kích thước của Box tối đa
     ) {
@@ -39,7 +40,10 @@ fun RecipeScreen(modifier: Modifier = Modifier) {
                 Text(text = "Error orccured: ${viewState.error}") // Component Text để hiển thị lỗi
             } // Nếu có lỗi thì hiển thị lỗi
             else -> {
-                CategoryScreen(categories = viewState.list)
+                CategoryScreen(
+                    categories = viewState.list,
+                    navigateToDetail
+                ) // Render một CategoryScreen với dữ liệu từ viewState.list
             } // Nếu không có lỗi thì hiển thị dữ liệu
         }
     } // Box là một container, giống như div trong HTML
@@ -47,23 +51,33 @@ fun RecipeScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CategoryScreen(categories: List<Category>) {
+fun CategoryScreen(
+    categories: List<Category>,
+    navigateToDetail: (Category) -> Unit
+) {
     LazyVerticalGrid(
         GridCells.Fixed(2), // Chia lưới thành 2 cột
         modifier = Modifier.fillMaxSize() // Chỉnh sửa kích thước của LazyVerticalGrid tối đa
     ) {
         items(categories) { category ->
-            CategoryItem(category = category) // Render một CategoryItem với dữ liệu từ categories
+            CategoryItem(
+                category = category,
+                navigateToDetail
+            ) // Render một CategoryItem với dữ liệu từ categories
         }
     } // LazyVerticalGrid là một container, giống như div trong HTML nhưng có thể scroll, và lazy load dữ liệu
 }
 
 @Composable
-fun CategoryItem(category: Category) {
+fun CategoryItem(
+    category: Category,
+    navigateToDetail: (Category) -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxSize(), // Chỉnh sửa kích thước và padding của Column
+            .fillMaxSize() // Chỉnh sửa kích thước và padding của Column
+            .clickable { navigateToDetail(category) }, // Khi click vào Column sẽ thực hiện hàm navigateToDetail với tham số category
         horizontalAlignment = Alignment.CenterHorizontally // Chỉnh sửa vị trí của Column theo chiều ngang
     ) {
         Image(

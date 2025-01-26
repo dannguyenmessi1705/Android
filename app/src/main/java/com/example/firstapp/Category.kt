@@ -1,10 +1,14 @@
 package com.example.firstapp
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Category(
     val strCategory: String,
     val strCategoryThumb: String,
     val strCategoryDescription: String
-) // Dữ liệu cần lấy từ API
+) : Parcelable // Dữ liệu cần lấy từ API, sử dụng Parcelable để deserialize dữ liệu từ Object sang dạng String để truyền dữ liệu qua các màn hình
 
 data class CategoriesResponse(
     val categories: List<Category>
