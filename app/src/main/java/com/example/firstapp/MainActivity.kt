@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
+//            val navController = rememberNavController()
+            val locationViewModel: LocationViewModel = viewModel()
             FirstAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -49,7 +51,7 @@ class MainActivity : ComponentActivity() {
 //                        RecipeApp(navController = navController)
 //                        AppScreen()
 //                        RecipeScreen()
-                        LocationApp()
+                        LocationApp(locationViewModel)
                     }
                 }
             }
@@ -90,8 +92,11 @@ fun AppScreen() {
 @Composable
 fun LocationDisplay(
     locationUtils: LocationUtils,
+    locationViewModel: LocationViewModel,
     context: Context
 ) {
+    val location = locationViewModel.location.value // Lấy ra state vị trí từ ViewModel
+
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
         onResult = { permission ->
@@ -99,7 +104,8 @@ fun LocationDisplay(
                 &&
                 permission[Manifest.permission.ACCESS_FINE_LOCATION] == true
             ) {
-                // Quyền đã được cấp, không cần làm gì cả
+                // Quyền đã được cấp, thực hiện tiêp theo
+                locationUtils.requestLocationUpdate(locationViewModel)
             } else {
                 // Quyền chưa được cấp, hiển thị thông báo yêu cầu cấp quyền
                 val retionalRequired = ActivityCompat.shouldShowRequestPermissionRationale(
@@ -136,10 +142,16 @@ fun LocationDisplay(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Location not available")
+        if (location != null) {
+            Text(text = "Latitude: ${location.latitude}")
+            Text(text = "Longitude: ${location.longitude}")
+        } else {
+            Text(text = "Location not available")
+        }
         Button(onClick = {
             if (locationUtils.hasLocationPermission(context)) {
-                // Quyền đã được cấp
+                // Quyền đã được cấp, thực hiện tiếp theo
+                locationUtils.requestLocationUpdate(locationViewModel)
             } else {
                 // Quyền chưa được cấp, yêu cầu cấp quyền
                 requestPermissionLauncher.launch(
@@ -156,8 +168,8 @@ fun LocationDisplay(
 }
 
 @Composable
-fun LocationApp() {
+fun LocationApp(viewModel: LocationViewModel) {
     val context = LocalContext.current
     val localUtils = LocationUtils(context)
-    LocationDisplay(locationUtils = localUtils, context = context)
+    LocationDisplay(locationUtils = localUtils, viewModel, context = context)
 }

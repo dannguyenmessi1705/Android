@@ -36,3 +36,8 @@ Coil là một thư viện giúp chúng ta load ảnh hiệu quả và dễ dàn
 
 `androidx.navigation:navigation-compose` là một dependencies giúp chúng ta sử dụng Navigation trong
 Compose.
+
+## 2.6. com.google.android.gms:play-services-location
+
+`com.google.android.gms:play-services-location` là một dependencies giúp chúng ta sử dụng các dịch
+vụ vị trí của Google Play Services.
