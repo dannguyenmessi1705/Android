@@ -41,3 +41,8 @@ Compose.
 
 `com.google.android.gms:play-services-location` là một dependencies giúp chúng ta sử dụng các dịch
 vụ vị trí của Google Play Services.
+
+## 2.7. com.google.android.gms:play-services-maps
+
+`com.google.android.gms:play-services-maps` là một dependencies giúp chúng ta sử dụng Google Maps
+API

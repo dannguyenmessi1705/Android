@@ -97,6 +97,10 @@ fun LocationDisplay(
 ) {
     val location = locationViewModel.location.value // Lấy ra state vị trí từ ViewModel
 
+    val address = location?.let {
+        locationUtils.reverseGeocodeLocation(it) // Chuyển vị trí sang địa chỉ
+    }
+
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions(),
         onResult = { permission ->
@@ -145,6 +149,7 @@ fun LocationDisplay(
         if (location != null) {
             Text(text = "Latitude: ${location.latitude}")
             Text(text = "Longitude: ${location.longitude}")
+            Text(text = "Address: $address")
         } else {
             Text(text = "Location not available")
         }

@@ -70,6 +70,9 @@ dependencies {
     // Play Services Location (Dùng để lấy vị trí)
     implementation("com.google.android.gms:play-services-location:21.3.0")
 
+    // Play Services Maps (Dùng để hiển thị bản đồ)
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
+
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation("androidx.activity:activity-compose:1.7.0")
