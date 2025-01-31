@@ -44,5 +44,10 @@ vụ vị trí của Google Play Services.
 
 ## 2.7. com.google.android.gms:play-services-maps
 
-`com.google.android.gms:play-services-maps` là một dependencies giúp chúng ta sử dụng Google Maps
-API
+`com.google.android.gms:play-services-maps` là một dependencies giúp chúng ta chuyển đổi từ địa
+chỉ (lat, lng) sang tên địa điểm và ngược lại.
+
+## 2.8. com.google.maps.android:maps-compose
+
+`com.google.maps.android:maps-compose` là một dependencies giúp chúng ta sử dụng Google Maps trong
+Compose.

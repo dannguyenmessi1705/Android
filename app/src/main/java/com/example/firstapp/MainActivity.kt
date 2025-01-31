@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import com.example.firstapp.ui.theme.FirstAppTheme
 
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            val navController = rememberNavController()
+            val navController = rememberNavController()
             val locationViewModel: LocationViewModel = viewModel()
             FirstAppTheme {
                 // A surface container using the 'background' color from the theme
@@ -51,8 +52,10 @@ class MainActivity : ComponentActivity() {
 //                        RecipeApp(navController = navController)
 //                        AppScreen()
 //                        RecipeScreen()
-                        LocationApp(locationViewModel)
+//                        LocationApp(locationViewModel)
+                        NavigationShoppingLocation()
                     }
+
                 }
             }
         }
@@ -177,4 +180,40 @@ fun LocationApp(viewModel: LocationViewModel) {
     val context = LocalContext.current
     val localUtils = LocationUtils(context)
     LocationDisplay(locationUtils = localUtils, viewModel, context = context)
+}
+
+// Navigation Shopping App vs Location
+@Composable
+fun NavigationShoppingLocation() {
+    val navController = rememberNavController()
+    val locationViewModel: LocationViewModel = viewModel()
+    val context = LocalContext.current
+    val locationUtils = LocationUtils(context)
+
+    NavHost(
+        navController = navController,
+        startDestination = "shoppinglistscreen"
+    ) {
+        composable("shoppinglistscreen") {
+            ShoppingListApp(
+                locationUtils = locationUtils,
+                locationViewModel = locationViewModel,
+                navController = navController,
+                context = context,
+                address = locationViewModel.address.value.firstOrNull()?.formatted_address
+                    ?: "No Address"
+            )
+        }
+        dialog("locationscreen") { backstack ->
+            locationViewModel.location.value?.let { it1 ->
+                LocationSelectionScreen(
+                    location = it1,
+                    onLocationSelected = { locationData ->
+                        locationViewModel.fetchAddress("${locationData.latitude},${locationData.longitude}")
+                        navController.popBackStack() // Thực hiện popBackStack (đóng dialog)
+                    }
+                )
+            }
+        }
+    }
 }
