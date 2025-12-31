@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LotteryNumGenerator</string>
+    <string name="welcome_to_lottery_generator_app">Welcome to Lottery Generator</string>
+    <string name="enter_your_name">Enter Your Name</string>
+</resources>
