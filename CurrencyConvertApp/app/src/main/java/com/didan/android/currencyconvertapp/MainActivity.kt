@@ -3,6 +3,7 @@ package com.didan.android.currencyconvertapp
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         resultTextView = findViewById(R.id.resultText) // Lấy TextView từ layout có id là "resultText"
         editText = findViewById(R.id.editText) // Lấy EditText từ layout có id là "editText"
         converterButton = findViewById(R.id.converterBTN) // Lấy Button từ layout có id là "converterBTN"
-
         converterButton.setOnClickListener {
             var enteredUSD: String = editText.text.toString()
             var enteredUSDDouble: Double = enteredUSD.toDouble()
