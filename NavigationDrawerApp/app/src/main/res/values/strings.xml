@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NavigationDrawerApp</string>
+    <string name="navigation_header">Navigation Header</string>
+    <string name="home_page">Home Page</string>
+    <string name="message_page">Message Page</string>
+    <string name="settings_page">Settings Page</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+</resources>
