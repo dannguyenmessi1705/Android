@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<netwoek-security-config>
+    <!--  Cho phép lưu lượng không được mã hóa và tất cả các phụ miền của nó -->
+    <base-config cleartextTrafficPermitted="true">
+
+    <!--  Sử dụng chứng chỉ hệ thống làm điểm tin cậy cho các kết nối mạng -->
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+
+    </base-config>
+</netwoek-security-config>
