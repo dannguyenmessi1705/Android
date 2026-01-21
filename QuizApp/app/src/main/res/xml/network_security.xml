@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<netwoek-security-config>
+<network-security-config>
     <!--  Cho phép lưu lượng không được mã hóa và tất cả các phụ miền của nó -->
     <base-config cleartextTrafficPermitted="true">
 
@@ -9,4 +9,4 @@
         </trust-anchors>
 
     </base-config>
-</netwoek-security-config>
+</network-security-config>
