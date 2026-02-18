@@ -8,14 +8,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -24,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -136,11 +143,89 @@ fun TextCompose(name: String, modifier: Modifier = Modifier) {
             Text(text = "TextButton")
         }
 
+        // Biến trạng thái để lưu trữ giá trị của TextField
         var text by remember {
-            mutableStateOf(TextFieldValue())
+            mutableStateOf(TextFieldValue()) // mutableStateOf hoạt động như Observable, khi giá trị của text thay đổi, TextField sẽ tự động cập nhật giao diện
         }
 
         TextField(value = text, onValueChange = { text = it })
+
+        // Biến trạng thái để lưu trữ trạng thái của checkbox
+        var isChecked by remember {
+            mutableStateOf(false) // mutableStateOf hoạt động như Observable, khi giá trị của isChecked thay đổi, Checkbox sẽ tự động cập nhật giao diện
+        }
+        Checkbox(
+            checked = isChecked,
+            onCheckedChange = {
+                isChecked = it
+                Log.d("TextCompose", "Checkbox state changed: $isChecked")
+            }
+        )
+
+        // Biến trạng thái để lưu trữ trạng thái của switch
+        var isSwitched by remember {
+            mutableStateOf(false) // mutableStateOf hoạt động như Observable, khi giá trị của isSwitched thay đổi, Switch sẽ tự động cập nhật giao diện
+        }
+        Switch(
+            checked = isSwitched,
+            onCheckedChange = {
+                isSwitched = it
+                Log.d("TextCompose", "Switch state changed: $isSwitched")
+            }
+        )
+
+        // Biến trạng thái để lưu trữ giá trị của radio button
+        var selectedOption by remember {
+            mutableStateOf("Option 1") // mutableStateOf hoạt động như Observable, khi giá trị của selectedOption thay đổi, giao diện sẽ tự động cập nhật
+        }
+        Column(
+
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = selectedOption == "Option 1",
+                    onClick = {
+                        selectedOption = "Option 1"
+                        Log.d("TextCompose", "Selected: $selectedOption")
+                    }
+                )
+
+                Text(text = "Option 1", modifier = Modifier.padding(start = 8.dp))
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = selectedOption == "Option 2",
+                    onClick = {
+                        selectedOption = "Option 2"
+                        Log.d("TextCompose", "Selected: $selectedOption")
+                    }
+                )
+
+                Text(text = "Option 2", modifier = Modifier.padding(start = 8.dp))
+            }
+        }
+
+        // Thanh tiến trình (ProgressBar)
+        CircularProgressIndicator(
+            progress = { 6f / 10f },
+            modifier = Modifier.padding(top = 16.dp)
+        ) // Hiển thị thanh tiến trình với giá trị 60%
+
+        LinearProgressIndicator(
+            progress = { 6f / 10f },
+            modifier = Modifier.padding(top = 16.dp),
+            color = Color.Red,
+            trackColor = Color.Yellow
+        )
+
+
+
+
     }
 }
 
