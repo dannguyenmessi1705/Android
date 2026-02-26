@@ -1,0 +1,34 @@
+package com.didan.jetpack.compose.jetpackbottomnavigation
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
+import com.didan.jetpack.compose.jetpackbottomnavigation.naviagtion.BottomNavigationBar
+import com.didan.jetpack.compose.jetpackbottomnavigation.naviagtion.NavGraph
+import com.didan.jetpack.compose.jetpackbottomnavigation.ui.theme.JetpackBottomNavigationTheme
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            // tạo NavController để quản lý điều hướng
+            val navHostController = rememberNavController()
+            JetpackBottomNavigationTheme {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        BottomNavigationBar(navController = navHostController)
+                    }
+                ) { innerPadding ->
+                    NavGraph(navHostController = navHostController)
+                }
+            }
+        }
+    }
+}
