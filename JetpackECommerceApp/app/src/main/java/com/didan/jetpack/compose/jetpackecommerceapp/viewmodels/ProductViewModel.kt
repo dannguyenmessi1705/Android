@@ -1,0 +1,50 @@
+package com.didan.jetpack.compose.jetpackecommerceapp.viewmodels
+
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.didan.jetpack.compose.jetpackecommerceapp.model.Product
+import com.didan.jetpack.compose.jetpackecommerceapp.repository.FirebaseRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class ProductViewModel @Inject constructor(
+    private val firebaseRepository: FirebaseRepository
+) : ViewModel() {
+
+    // Encapsulation: mutable only internally, read-only externally
+    private val _products = MutableStateFlow<List<Product>>(emptyList())
+    val products: StateFlow<List<Product>> get() = _products
+
+    fun fetchProducts(categoryId: String) {
+        viewModelScope.launch {
+            try {
+                val products = firebaseRepository.getProductsByCategory(categoryId)
+                _products.value = products
+            } catch (e: Exception) {
+                Log.e("TAGY", "Error fetching products: ${e.message}")
+            }
+        }
+    }
+
+    // Encapsulation: mutable only internally, read-only externally
+    private val _allProducts = MutableStateFlow<List<Product>>(emptyList())
+    val allProducts: StateFlow<List<Product>> get() = _allProducts
+
+    fun getAllProductsInFirestore() {
+        viewModelScope.launch {
+            try {
+                val allProducts = firebaseRepository.getAllProductsInFirestore()
+                _allProducts.value = allProducts
+            } catch (e: Exception) {
+                Log.e("TAGY", "Error fetching all products: ${e.message}")
+            }
+        }
+    }
+
+
+}
